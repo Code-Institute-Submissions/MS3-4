@@ -5,6 +5,18 @@ Routes and views for the flask application.
 from datetime import datetime
 from flask import Flask, render_template, jsonify
 from MS3_Cookbook import app
+from flaskext.mysql import MySQL
+
+
+mysql = MySQL()
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
+app.config['MYSQL_DATABASE_DB'] = 'cookbook'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql.init_app(app)
+
+
+
 
 @app.route('/')
 @app.route('/home')
@@ -38,5 +50,11 @@ def about():
 
 @app.route('/api/auth')
 def auth():
+    conn = mysql.connect()
+    cursor =conn.cursor()
+
+    cursor.execute("SELECT * from recipe")
+    data = cursor.fetchone()
+ 
     password = "hello"
     return jsonify(password=password)
