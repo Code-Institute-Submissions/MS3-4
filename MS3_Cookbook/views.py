@@ -4,16 +4,14 @@ Routes and views for the flask application.
 
 from datetime import datetime
 from flask import Flask, render_template, jsonify
+from flask_mongoengine import MongoEngine
+from flask_pymongo import PyMongo
 from MS3_Cookbook import app
-from flaskext.mysql import MySQL
 
 
-mysql = MySQL()
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
-app.config['MYSQL_DATABASE_DB'] = 'cookbook'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-mysql.init_app(app)
+
+mongo = PyMongo(app)
+
 
 
 @app.after_request
@@ -55,17 +53,17 @@ def about():
         'about.html',
         title='About',
         year=datetime.now().year,
-        message='Your application description page.'
-    )
+        message='Your application description page.')
 
 @app.route('/api/auth')
 def auth():
-    conn = mysql.connect()
-    cursor =conn.cursor()
-
-    cursor.execute("SELECT * from recipe")
-    data = cursor.fetchone()
-  
+    online_users = mongo.db.cookbook.find({})
+    #x = online_users.count_documents;
+    return jsonify(password=online_users)
  
-    password = "hello"
-    return jsonify(password=password)
+
+
+
+
+
+### mongo "mongodb+srv://cookbook.3ljpp.mongodb.net/Cookbook" --username Lou
