@@ -8,6 +8,7 @@
         JavaScript.</p>
     <p><a href="http://flask.pocoo.org/" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
 </div>
+
 <!-- Single carousel for mobile view  -->
 <div class="row hide-on-med-and-up">
     <div class="col-md-12">
@@ -17,15 +18,14 @@
             <div class="carousel-item">
                 <div class="card">
                     <div class="card-image">
-                        <img
-                            src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/molten-cheese-stuffed-burgers-538adf8.jpg">
+                        <img src="{{ recipe.Image }}">
                         <span class="card-title">Recipe Title</span>
                     </div>
                     <div class="card-content">
                         <p>Recipe Description</p>
                     </div>
                     <div class="card-action">
-                        <a href="#">View full recipe herek</a>
+                        <a href="#">View full recipe here</a>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                         <p>Recipe Description</p>
                     </div>
                     <div class="card-action">
-                        <a href="#">View full recipe herek</a>
+                        <a href="#">View full recipe here</a>
                     </div>
                 </div>
             </div>
@@ -50,128 +50,38 @@
     </div>
 </div>
 
+<!-- Desktop Carousel -->
+
 <div class="row hide-on-small-only">
     <div class="col-md-12">
 
         <div class="carousel carousel-slider">
             <a id="btn-left" class="btn-floating btn-large waves-effect waves-light red"><i
                     class="material-icons">chevron_left</i></a>
+            {% for cat in recipes %}
+            <!-- Above loop iterates through array of categories -->
             <div class="carousel-item">
                 <div class="row">
+                    {% for rec in cat %}
+                    <!-- Then iterates through each category to produce multiple cards filled with Recipe details -->
                     <div class="col m3">
-
-
                         <div class="card">
                             <div class="card-image">
-                                <img
-                                    src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/molten-cheese-stuffed-burgers-538adf8.jpg">
-                                <span class="card-title">Recipe Title</span>
+                                <img src="{{ rec.Image }}">
+                                <span class="card-title">{{ rec.Name }}</span>
                             </div>
                             <div class="card-content">
-                                <p>Recipe Description</p>
+                                <p>{{ rec.Description }}</p>
                             </div>
                             <div class="card-action">
-                                <a href="#">View full recipe herek</a>
+                                <a href="#">View full recipe here</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col m3">
-
-
-                        <div class="card">
-                            <div class="card-image">
-                                <img
-                                    src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/molten-cheese-stuffed-burgers-538adf8.jpg">
-                                <span class="card-title">Recipe Title</span>
-                            </div>
-                            <div class="card-content">
-                                <p>Recipe Description</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">View full recipe herek</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col m3">
-
-
-                        <div class="card">
-                            <div class="card-image">
-                                <img
-                                    src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/molten-cheese-stuffed-burgers-538adf8.jpg">
-                                <span class="card-title">Recipe Title</span>
-                            </div>
-                            <div class="card-content">
-                                <p>Recipe Description</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">View full recipe herek</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col m3">
-
-
-                        <div class="card">
-                            <div class="card-image">
-                                <img
-                                    src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/molten-cheese-stuffed-burgers-538adf8.jpg">
-                                <span class="card-title">Recipe Title</span>
-                            </div>
-                            <div class="card-content">
-                                <p>Recipe Description</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">View full recipe herek</a>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
-
-            <div class="carousel-item">
-                <div class="row">
-                    <div class="col m3">
-
-
-                        <div class="card">
-                            <div class="card-image">
-                                <img
-                                    src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/molten-cheese-stuffed-burgers-538adf8.jpg">
-                                <span class="card-title">Recipe Title</span>
-                            </div>
-                            <div class="card-content">
-                                <p>Recipe Description</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">View full recipe herek</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <div class="row">
-                    <div class="col m3">
-
-
-                        <div class="card">
-                            <div class="card-image">
-                                <img
-                                    src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/molten-cheese-stuffed-burgers-538adf8.jpg">
-                                <span class="card-title">Recipe Title</span>
-                            </div>
-                            <div class="card-content">
-                                <p>Recipe Description</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">View full recipe herek</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
 
             <a id="btn-right" class="btn-floating btn-large waves-effect waves-light red"><i
                     class="material-icons">chevron_right</i></a>
