@@ -9,7 +9,6 @@ from flask_pymongo import PyMongo
 from MS3_Cookbook import app
 
 
-
 mongo = PyMongo(app)
 
 
@@ -30,9 +29,19 @@ def add_header(r):
 @app.route('/home')
 def home():
     """Renders the home page."""
+
+    # recipe = list(mongo.db.recipe.find())
+    recipe = mongo.db.recipe.find_one({"_id": 26})
+    
+    recipes1 = mongo.db.recipe.find()[1:5]
+    recipes2 = mongo.db.recipe.find()[11:15]
+    recipes3 = mongo.db.recipe.find()[21:25]
+
     return render_template(
         'index.html',
         title='Home Page',
+        recipe=recipe,
+        recipes=[list(recipes1), list(recipes2), list(recipes3)],
         year=datetime.now().year,
     )
 
@@ -55,11 +64,17 @@ def about():
         year=datetime.now().year,
         message='Your application description page.')
 
-@app.route('/api/auth')
-def auth():
-    online_users = mongo.db.cookbook.find({})
-    #x = online_users.count_documents;
-    return jsonify(password=online_users)
+@app.route('/api/recipe/<recipe_id>')
+def recipe(recipe_id):
+    recipe = mongo.db.recipe.find_one({"_id":int(recipe_id)})
+    
+    return jsonify(recipe)
+
+@app.route('/api/recipe/<recipe_id>/categories')
+def recipe_categories(recipe_id):
+    recipe = mongo.db.recipe.find_one({"_id":int(recipe_id)}, projection={"Categories": True})
+    
+    return jsonify(recipe)
  
 
 
