@@ -11,48 +11,97 @@
 
 <!-- Single carousel for mobile view  -->
 <div class="row hide-on-med-and-up">
-    <div class="col-md-12">
-        <div class="carousel carousel-slider">
+    <div class="col-s-12">
+
+        <div id="carousel-mob" class="carousel carousel-slider">
             <a id="btn-left-mob" class="btn-floating btn-large waves-effect waves-light red"><i
                     class="material-icons">chevron_left</i></a>
+            {% for cat in recipes %}
+            <!-- Above loop iterates through array of categories -->
             <div class="carousel-item">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="{{ recipe.Image }}">
-                        <span class="card-title">Recipe Title</span>
+                {% for rec in cat %}
+                    <div class="row">
+
+                    <!-- Then iterates through each category to produce multiple cards filled with Recipe details -->
+                        <div class="col s12">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="{{ rec.Image }}">
+                                    <span class="card-title">{{ rec.Name }}</span>
+                                </div>
+                                <div class="card-content">
+                                    <p>{{ rec.Description }}</p>
+                                </div>
+                                <div class="card-action">
+                                    <a href="#">View full recipe here</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <p>Recipe Description</p>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">View full recipe here</a>
-                    </div>
-                </div>
+
+                {% endfor %}
             </div>
-            <div class="carousel-item">
-                <div class="card">
-                    <div class="card-image">
-                        <img
-                            src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/molten-cheese-stuffed-burgers-538adf8.jpg">
-                        <span class="card-title">Recipe Title</span>
-                    </div>
-                    <div class="card-content">
-                        <p>Recipe Description</p>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">View full recipe here</a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
+
             <a id="btn-right-mob" class="btn-floating btn-large waves-effect waves-light red"><i
                     class="material-icons">chevron_right</i></a>
         </div>
     </div>
 </div>
 
+
+<!-- Single carousel for tablet view  -->
+<div class="row hide-on-small-only hide-on-large-only">
+    <div class="col-s-12">
+
+        <div id="carousel-tab" class="carousel carousel-slider">
+            <a id="btn-left-mob" class="btn-floating btn-large waves-effect waves-light red"><i
+                    class="material-icons">chevron_left</i></a>
+            {% for cat in recipes %}
+            <!-- Above loop iterates through array of categories -->
+            <div class="carousel-item">
+                {% for rec in cat %}
+                    {% if loop.index == 1 or loop.index == 3 %}
+                        <div class="row">
+                    {% endif %}
+                    
+
+                    
+                    <!-- Then iterates through each category to produce multiple cards filled with Recipe details -->
+                        <div class="col s6">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="{{ rec.Image }}">
+                                    <span class="card-title">{{ rec.Name }}</span>
+                                </div>
+                                <div class="card-content">
+                                    <p>{{ rec.Description }}</p>
+                                </div>
+                                <div class="card-action">
+                                    <a href="#">View full recipe here</a>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    {% if loop.index == 2 or loop.index == 4 %}
+                        </div>
+
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+            <a id="btn-right-mob" class="btn-floating btn-large waves-effect waves-light red"><i
+                    class="material-icons">chevron_right</i></a>
+        </div>
+    </div>
+</div>
+
+
 <!-- Desktop Carousel -->
 
-<div class="row hide-on-small-only">
+<div class="row hide-on-med-and-down">
     <div class="col-md-12">
 
         <div class="carousel carousel-slider">
