@@ -20,24 +20,14 @@
             <!-- Above loop iterates through array of categories -->
             <div class="carousel-item">
                 {% for rec in cat %}
-                    <div class="row">
+                <div class="row">
 
                     <!-- Then iterates through each category to produce multiple cards filled with Recipe details -->
-                        <div class="col s12">
-                            <div class="card">
-                                <div class="card-image">
-                                    <img src="{{ rec.Image }}">
-                                    <span class="card-title">{{ rec.Name }}</span>
-                                </div>
-                                <div class="card-content">
-                                    <p>{{ rec.Description }}</p>
-                                </div>
-                                <div class="card-action">
-                                    <a href="#">View full recipe here</a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col s12">
+                        {% include 'recipecard.html' %}
+
                     </div>
+                </div>
 
                 {% endfor %}
             </div>
@@ -61,32 +51,22 @@
             <!-- Above loop iterates through array of categories -->
             <div class="carousel-item">
                 {% for rec in cat %}
-                    {% if loop.index == 1 or loop.index == 3 %}
-                        <div class="row">
+                {% if loop.index == 1 or loop.index == 3 %}
+                <div class="row">
                     {% endif %}
-                    
 
-                    
+
+
                     <!-- Then iterates through each category to produce multiple cards filled with Recipe details -->
-                        <div class="col s6">
-                            <div class="card">
-                                <div class="card-image">
-                                    <img src="{{ rec.Image }}">
-                                    <span class="card-title">{{ rec.Name }}</span>
-                                </div>
-                                <div class="card-content">
-                                    <p>{{ rec.Description }}</p>
-                                </div>
-                                <div class="card-action">
-                                    <a href="#">View full recipe here</a>
-                                </div>
-                            </div>
-                        </div>
-                    
-                    {% if loop.index == 2 or loop.index == 4 %}
-                        </div>
+                    <div class="col s6">
+                        {% include 'recipecard.html' %}
 
-                    {% endif %}
+                    </div>
+
+                    {% if loop.index == 2 or loop.index == 4 %}
+                </div>
+
+                {% endif %}
 
                 {% endfor %}
             </div>
@@ -114,18 +94,8 @@
                     {% for rec in cat %}
                     <!-- Then iterates through each category to produce multiple cards filled with Recipe details -->
                     <div class="col m3">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="{{ rec.Image }}">
-                                <span class="card-title">{{ rec.Name }}</span>
-                            </div>
-                            <div class="card-content">
-                                <p>{{ rec.Description }}</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">View full recipe here</a>
-                            </div>
-                        </div>
+                        {% include 'recipecard.html' %}
+
                     </div>
                     {% endfor %}
                 </div>
