@@ -63,3 +63,21 @@ ul li a {
 .card-title {
     background-color: rgba(0, 0, 0, 0.3);
 }
+
+.login-form {
+    background: white;
+    height: 600px;
+    margin-top: 150px;
+}
+
+.login-form .material-icons.prefix {
+    color: #333;
+}
+
+ul.tabs {
+    display : flex;
+}
+
+li.tab {
+   flex-basis : 50%;
+}
