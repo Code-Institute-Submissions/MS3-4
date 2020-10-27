@@ -91,4 +91,12 @@ def recipe_categories(recipe_id):
     
     return jsonify(recipe)
 
+
+@app.route('/auth/login')
+def login_page():
+    return render_template(
+        'login.html',
+        title='Login/Signup'
+    )
+
 ### mongo "mongodb+srv://cookbook.3ljpp.mongodb.net/Cookbook" --username Lou
