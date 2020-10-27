@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col s12 m4 offset-m4">
+        <div class="login-form z-depth-3">
+            <div class="row">
+                <div class="col s12">
+                    <ul class="tabs" id="login-tabs">
+                        <li class="tab col s3"><a href="#test1">Login</a></li>
+                        <li class="tab col s3"><a class="active" href="#test2">Sign Up</a></li>
+                    </ul>
+                </div>
+                <div id="test1" class="col s12">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s8 offset-s2">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="icon_username" type="text" class="validate">
+                                <label for="icon_username">Username</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s8 offset-s2">
+                                <i class="material-icons prefix">vpn_key</i>
+                                <input id="icon_password" type="password" class="validate">
+                                <label for="icon_password">Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6 offset-s3 center-align">
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Login
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="test2" class="col s12">
+                    <form action="">
+                        <div class="row">
+                            <div class="input-field col s8 offset-s2">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="icon_register_username" type="text" class="validate">
+                                <label for="icon_register_username">Username</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s8 offset-s2">
+                                <i class="material-icons prefix">vpn_key</i>
+                                <input id="icon_register_password" type="password" class="validate">
+                                <label for="icon_register_password">Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s8 offset-s2">
+                                <i class="material-icons prefix">vpn_key</i>
+                                <input id="icon_register_confirm_password" type="password" class="validate">
+                                <label for="icon_register_confirm_password">Confirm Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s8 offset-s2">
+                                <i class="material-icons prefix">email</i>
+                                <input id="icon_register_email" type="text" class="validate">
+                                <label for="icon_register_email">Email Address</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s8 offset-s2">
+                                <i class="material-icons prefix">email</i>
+                                <input id="icon_register_confirm_email" type="text" class="validate">
+                                <label for="icon_register_confirm_email">Confirm Email Address</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6 offset-s3 center-align">
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Sign Up
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
