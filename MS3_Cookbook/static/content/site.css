@@ -92,9 +92,13 @@ li.tab {
 }
 
 .recipe-img {
-    width: 440px;
-    height: 400px;
+    width: 100%;
+    margin-top: 48px;
 }
 ol li, ul li {
     margin-bottom: 15px;
+}
+
+.recipe-steps {
+    padding-inline-start: 10px;
 }
