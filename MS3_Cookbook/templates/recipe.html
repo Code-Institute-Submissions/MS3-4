@@ -5,12 +5,12 @@
 
 <div class="row">
     <div class="col m3">
-        <img src="{{ recipe.Image}}" alt="{{ recipe.Name }}">
+        <img class="recipe-img" src="{{ recipe.Image}}" alt="{{ recipe.Name }}">
     </div>
     <div class="col m6">
         <h2>{{ recipe.Name }}</h2>
         <p>{{ recipe.Description }}</p>
-        <p>{{ recipe.TotalTime }}</p>
+        <p>{{time}}</p>
     </div>
     <div class="col m3">
         <!-- Recommended recipes like this -->
@@ -18,20 +18,22 @@
 </div>
 <div class="row">
     <div class="col m3">
-        <ul>
-            <li>{{ recipe.Ingredients }}</li>
+        <ul class="ingred-list">
+            {% for ingredient in recipe.Ingredients %}
+                <li>{{ ingredient }}</li>
+            {% endfor %}
         </ul>
     </div>
     <div class="col m6">
         <ol>
-            <li>{{ recipe.Steps }}</li>
+            {% for step in recipe.Steps %}
+                <li>{{ step }}</li>
+            {% endfor %}
         </ol>
     </div>
     <div class="col m3">
         <!-- Watch how it's done on YT -->
     </div>
 </div>
-
-
 
 {% endblock %}
