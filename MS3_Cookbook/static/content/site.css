@@ -81,3 +81,20 @@ ul.tabs {
 li.tab {
    flex-basis : 50%;
 }
+
+.ingred-list {
+    padding-left: 20px !important; 
+}
+
+.ingred-list li {
+    color: #fff;
+    list-style-type: disc !important;
+}
+
+.recipe-img {
+    width: 440px;
+    height: 400px;
+}
+ol li, ul li {
+    margin-bottom: 15px;
+}
