@@ -8,6 +8,8 @@ from flask_mongoengine import MongoEngine
 from flask_pymongo import PyMongo
 from MS3_Cookbook import app
 from random import uniform
+from search import RecipeSearchForm
+from math import floor
 
 mongo = PyMongo(app)
 
@@ -82,7 +84,9 @@ def random_recipe():
     return render_template(
         'recipe.html',
         title=recipe['Name'],
-        recipe=recipe)
+        recipe=recipe,
+        time=secs_to_hours(recipe['TotalTime'])
+    )
 
 
 @app.route('/api/recipe/<recipe_id>/categories')
@@ -98,5 +102,15 @@ def login_page():
         'login.html',
         title='Login/Signup'
     )
+
+def secs_to_hours(time): 
+    if time/3600 < 1:
+        return str(int(time/60)) + " minute(s)."
+    else:
+        hours = floor(time/3600) 
+        takeaway_hours = hours*60 
+        minutes = (time / 60) - takeaway_hours
+    return str(int(hours)) + " hour(s), " + str(int(minutes)) + " minute(s)."
+
 
 ### mongo "mongodb+srv://cookbook.3ljpp.mongodb.net/Cookbook" --username Lou
