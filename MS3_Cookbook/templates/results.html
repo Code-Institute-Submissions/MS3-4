@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+{% for rec in results %}
+<div class="col m1">
+{% include 'recipecard.html' %}
+</div>
+{% endfor %}
+</div>
+{% endblock %}
