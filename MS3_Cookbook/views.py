@@ -3,7 +3,7 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from flask_mongoengine import MongoEngine
 from flask_pymongo import PyMongo
 from MS3_Cookbook import app
@@ -57,14 +57,29 @@ def contact():
         message='Your contact page.'
     )
 
-@app.route('/about')
-def about():
-    """Renders the about page."""
+@app.route('/categories')
+def categories():
+    """Renders the categories page."""
+    cat_length = mongo.db.categories.count()
+    category = mongo.db.categories.find()[1:cat_length]
+
+    categories = random_category_recipe(list(category))
     return render_template(
-        'about.html',
-        title='About',
+        'categories.html',
+        title='categories',
         year=datetime.now().year,
-        message='Your application description page.')
+        categories=categories,
+        message='Categories page.')
+
+
+@app.route('/category/<category_id>')
+def category(category_id):
+    category = mongo.db.categories.find_one({"_id":int(category_id)})
+    
+    return render_template(
+        'category.html',
+        title=category['Name'],
+        category=category)
 
 @app.route('/recipe/<recipe_id>')
 def recipe(recipe_id):
@@ -114,3 +129,28 @@ def secs_to_hours(time):
 
 
 ### mongo "mongodb+srv://cookbook.3ljpp.mongodb.net/Cookbook" --username Lou
+
+def random_category_recipe(categories):
+    for cat in categories:
+        catRecTotal = len(cat['Recipes'])
+        cat['Image'] = cat['Recipes'][floor(uniform(0, catRecTotal))]['Image']
+        cat['Recipes'] = []
+    return categories
+
+@app.route('/search')
+def search():
+    searchTerm = request.args['search']
+    searchCursor = mongo.db.recipes.find({ "$or": [
+        genSearch('Name', searchTerm),
+        genSearch('Ingredients', searchTerm),
+        genSearch('Description', searchTerm)
+    ]})
+    searchResults = list(searchCursor)
+    
+    return render_template(
+        'results.html',
+        results=searchResults)
+
+
+def genSearch(name, value):
+    return {name:{'$regex': value, "$options" :'i'}}
