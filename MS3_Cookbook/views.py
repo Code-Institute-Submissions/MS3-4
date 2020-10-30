@@ -119,13 +119,18 @@ def login_page():
     )
 
 def secs_to_hours(time): 
-    if time/3600 < 1:
-        return str(int(time/60)) + " minute(s)."
+    hours = floor(time/3600) 
+    takeaway_hours = hours*60 
+    minutes = (time / 60) - takeaway_hours
+    if hours< 1:
+        if time/60 > 1:
+            return str(int(time/60)) + " minutes"
+        else:
+            return str(int(time/60)) + " minute"
     else:
-        hours = floor(time/3600) 
-        takeaway_hours = hours*60 
-        minutes = (time / 60) - takeaway_hours
-    return str(int(hours)) + " hour(s), " + str(int(minutes)) + " minute(s)."
+        if hours == 1:
+            return str(int(hours)) + " hour, " + str(int(minutes)) + " minutes"
+        return str(int(hours)) + " hours, " + str(int(minutes)) + " minutes"
 
 
 ### mongo "mongodb+srv://cookbook.3ljpp.mongodb.net/Cookbook" --username Lou
@@ -154,3 +159,4 @@ def search():
 
 def genSearch(name, value):
     return {name:{'$regex': value, "$options" :'i'}}
+
