@@ -102,3 +102,36 @@ ol li, ul li {
 .recipe-steps {
     padding-inline-start: 10px;
 }
+
+.result-cards {
+    height: 525px;
+    padding: 10px;
+    min-width: 350px
+}
+
+.result-cards p {
+    color: #000;
+}
+
+.result-cards .card-title {
+    font-size: 1rem;
+    width: 100%;
+    text-align: center;
+}
+.result-cards .card-content {
+    height: 150px;
+}
+
+#searchbar:focus, #searchbar:active {
+    border-bottom: 1px solid #333 !important;
+  box-shadow: 0 1px 0 0 #333 !important;
+}
+
+.search-form {
+    position: relative;
+    left: 50px;
+}
+
+nav .input-field label.active i {
+    color: #000;
+}
