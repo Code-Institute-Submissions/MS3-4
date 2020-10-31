@@ -3,13 +3,14 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, session
 from flask_mongoengine import MongoEngine
 from flask_pymongo import PyMongo
 from MS3_Cookbook import app
 from random import uniform
 from search import RecipeSearchForm
 from math import floor
+
 
 mongo = PyMongo(app)
 
@@ -111,12 +112,74 @@ def recipe_categories(recipe_id):
     return jsonify(recipe)
 
 
-@app.route('/auth/login')
+@app.route('/auth/login', methods=['GET', 'POST'])
 def login_page():
+    
+    if request.method == 'POST':
+        data = request.form
+        errors = []
+        valid = True
+        username = data['username']
+        
+        password = data['password']
+        action = data['action']
+        if action == 'register':
+            cfmEmail = data['cfmEmail']
+            cfmPassword = data['cfmPassword']
+            email = data['email']
+
+
+            if cfmEmail != email: 
+                valid = False
+                errors.append('Email addresses must match')
+            if cfmPassword != password: 
+                valid = False
+                errors.append('Passwords must match')
+
+            if (valid):
+                user = register_user(username, email, password)
+            return render_template(
+                'login.html',
+                title='Login/Signup',
+                args=request.args,
+                data = data,
+                username=username,
+                email=email,
+                cfmEmail=cfmEmail,
+                errors=errors
+            )
+        if action == 'login':
+            logged_in = login_user(username, password)
+            if logged_in:
+                session['current_user'] = username
+            return render_template(
+                'login.html',
+                title='Login/Signup',
+                args=request.args,
+                data = data,
+                username=username,
+                errors=errors
+            )
+        return render_template(
+            'login.html',
+            title='Login/Signup',
+            args=request.args,
+            data = data,
+            username=username,
+            email=email,
+            cfmEmail=cfmEmail,
+            errors=errors
+        )
     return render_template(
-        'login.html',
-        title='Login/Signup'
-    )
+            'login.html',
+            title='Login/Signup'
+        )
+
+def create_user():
+
+    return
+
+
 
 def secs_to_hours(time): 
     hours = floor(time/3600) 
@@ -159,4 +222,13 @@ def search():
 
 def genSearch(name, value):
     return {name:{'$regex': value, "$options" :'i'}}
+
+def register_user(username, email, password):
+    return mongo.db.authors.insert_one({ "username": username, "email": email, "password": password })
+def login_user(username, password):
+    user = mongo.db.authors.find_one({"username": username})
+    # this needs to be encrypted
+    if user['password'] == password: 
+        return True
+    return False
 
