@@ -3,10 +3,7 @@
 {% block content %}
 
 <div class="jumbotron">
-    <h1>Flask</h1>
-    <p class="lead">Flask is a free web framework for building great Web sites and Web applications using HTML, CSS and
-        JavaScript.</p>
-    <p><a href="http://flask.pocoo.org/" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+    <h1>Recipe for Disaster</h1>
 </div>
 
 <!-- Single carousel for mobile view  -->
@@ -14,27 +11,20 @@
     <div class="col-s-12">
 
         <div id="carousel-mob" class="carousel carousel-slider">
-            <a id="btn-left-mob" class="btn-floating btn-large waves-effect waves-light red"><i
-                    class="material-icons">chevron_left</i></a>
             {% for cat in recipes %}
             <!-- Above loop iterates through array of categories -->
             <div class="carousel-item">
                 {% for rec in cat %}
                 <div class="row">
-
                     <!-- Then iterates through each category to produce multiple cards filled with Recipe details -->
                     <div class="col s12">
+                        <!-- Includes card template from recipecard.html -->
                         {% include 'recipecard.html' %}
-
                     </div>
                 </div>
-
                 {% endfor %}
             </div>
             {% endfor %}
-
-            <a id="btn-right-mob" class="btn-floating btn-large waves-effect waves-light red"><i
-                    class="material-icons">chevron_right</i></a>
         </div>
     </div>
 </div>
@@ -43,10 +33,7 @@
 <!-- Single carousel for tablet view  -->
 <div class="row hide-on-small-only hide-on-large-only">
     <div class="col-s-12">
-
         <div id="carousel-tab" class="carousel carousel-slider">
-            <a id="btn-left-mob" class="btn-floating btn-large waves-effect waves-light red"><i
-                    class="material-icons">chevron_left</i></a>
             {% for cat in recipes %}
             <!-- Above loop iterates through array of categories -->
             <div class="carousel-item">
@@ -54,11 +41,9 @@
                 {% if loop.index == 1 or loop.index == 3 %}
                 <div class="row">
                     {% endif %}
-
-
-
                     <!-- Then iterates through each category to produce multiple cards filled with Recipe details -->
                     <div class="col s6">
+                        <!-- Includes card template from recipecard.html -->
                         {% include 'recipecard.html' %}
 
                     </div>
@@ -71,16 +56,12 @@
                 {% endfor %}
             </div>
             {% endfor %}
-
-            <a id="btn-right-mob" class="btn-floating btn-large waves-effect waves-light red"><i
-                    class="material-icons">chevron_right</i></a>
         </div>
     </div>
 </div>
 
 
 <!-- Desktop Carousel -->
-
 <div class="row hide-on-med-and-down">
     <div class="col-md-12">
 
@@ -94,6 +75,7 @@
                     {% for rec in cat %}
                     <!-- Then iterates through each category to produce multiple cards filled with Recipe details -->
                     <div class="col m3">
+                        <!-- Includes card template from recipecard.html -->
                         {% include 'recipecard.html' %}
 
                     </div>
@@ -101,7 +83,6 @@
                 </div>
             </div>
             {% endfor %}
-
             <a id="btn-right" class="btn-floating btn-large waves-effect waves-light red"><i
                     class="material-icons">chevron_right</i></a>
         </div>
@@ -113,24 +94,7 @@
 
 
     <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            Flask gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://flask.pocoo.org/docs/">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>The Python Package Index is a repository of software for the Python programming language.</p>
-        <p><a class="btn btn-default" href="https://pypi.python.org/pypi">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Microsoft Azure</h2>
-        <p>You can easily publish to Microsoft Azure using Visual Studio. Find out how you can host your application
-            using a free trial today.</p>
-        <p><a class="btn btn-default" href="http://azure.microsoft.com">Learn more &raquo;</a></p>
+        
     </div>
 </div>
 
