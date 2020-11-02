@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<form action="/addrecipe" method="post">
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            
+            <input id="icon_add_username" type="text" class="validate" required name="Name" value="{{Name}}" minlength="4"> 
+            <label for="icon_add_Name">Recipe Name</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            <input id="icon_add_Description" type="text" class="validate" required name="Description" minlength="8">
+            <label for="icon_add_Description">Recipe Description</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            <textarea name="Ingredients" id="" cols="30" rows="10"></textarea>
+            <label for="icon_add_Ingredients">Recipe Ingredients</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            <textarea name="Steps" id="" cols="30" rows="10"></textarea>
+            <label for="icon_add_Steps">Recipe Steps</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            <input id="icon_add_TotalTime" type="text" class="validate" required name="TotalTime" value="{{TotalTime}}">
+            <label for="icon_add_TotalTime">Total Time</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            <textarea name="Categories" id="" cols="30" rows="10"></textarea>
+            <label for="icon_add_Categories">Recipe Categories</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s6 offset-s3 center-align">
+            <input type="hidden" value="register" name="action">
+            <button class="btn waves-effect waves-light" type="submit">Add Recipe!
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
+
+
+<!-- 
+    <input id="icon_add_Ingredients" type="text" class="validate" required name="Ingredients">
+<input id="icon_add_Categories" type="email" class="validate" required name="Categories" value="{{Categories}}">
+<input id="icon_add_Steps" type="text" class="validate" required name="Steps" value="{{Steps}}">
+ -->
