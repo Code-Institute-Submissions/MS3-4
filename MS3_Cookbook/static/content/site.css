@@ -1,6 +1,6 @@
 body {
- color: #fff; 
- background-color: #333333  
+    color: #fff;
+    background-color: #333333
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -45,7 +45,7 @@ input[type="checkbox"].input-validation-error {
 
 
 #carousel-mob {
-    height: 2800px !important; 
+    height: 2800px !important;
 }
 
 #carousel-tab {
@@ -75,15 +75,15 @@ ul li a {
 }
 
 ul.tabs {
-    display : flex;
+    display: flex;
 }
 
 li.tab {
-   flex-basis : 50%;
+    flex-basis: 50%;
 }
 
 .ingred-list {
-    padding-left: 20px !important; 
+    padding-left: 20px !important;
 }
 
 .ingred-list li {
@@ -95,7 +95,9 @@ li.tab {
     width: 100%;
     margin-top: 48px;
 }
-ol li, ul li {
+
+ol li,
+ul li {
     margin-bottom: 15px;
 }
 
@@ -118,13 +120,20 @@ ol li, ul li {
     width: 100%;
     text-align: center;
 }
+
 .result-cards .card-content {
     height: 150px;
 }
 
-#searchbar:focus, #searchbar:active {
+#searchbar {
+    position: relative;
+    top: 23px;
+}
+
+#searchbar:focus,
+#searchbar:active {
     border-bottom: 1px solid #333 !important;
-  box-shadow: 0 1px 0 0 #333 !important;
+    box-shadow: 0 1px 0 0 #333 !important;
 }
 
 .search-form {
@@ -134,4 +143,22 @@ ol li, ul li {
 
 nav .input-field label.active i {
     color: #000;
+}
+
+.navbar-list {
+    width: 50%;
+}
+
+#topbarsearch .input-field .prefix {
+    width: 0rem !important;
+}
+
+#topbarsearch nav ul li:hover,
+nav ul li.active {
+    background-color: none !important;
+}
+
+textarea {
+    color: #fff;
+    
 }
