@@ -3,13 +3,14 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import Flask, render_template, jsonify, request, session
+from flask import Flask, render_template, jsonify, request, session, url_for, redirect
 from flask_mongoengine import MongoEngine
 from flask_pymongo import PyMongo
 from MS3_Cookbook import app
 from random import uniform
 from search import RecipeSearchForm
 from math import floor
+import bcrypt 
 
 
 mongo = PyMongo(app)
@@ -33,12 +34,12 @@ def add_header(r):
 def home():
     """Renders the home page."""
 
-    recipe1 = mongo.db.recipe.find_one({"_id":1})
-    recipe = mongo.db.recipe.find_one({"_id": 26})
+    recipe1 = mongo.db.recipes.find_one({"_id":1})
+    recipe = mongo.db.recipes.find_one({"_id": 26})
     
-    recipes1 = mongo.db.recipe.find()[1:5]
-    recipes2 = mongo.db.recipe.find()[11:15]
-    recipes3 = mongo.db.recipe.find()[21:25]
+    recipes1 = mongo.db.recipes.find()[1:5]
+    recipes2 = mongo.db.recipes.find()[11:15]
+    recipes3 = mongo.db.recipes.find()[21:25]
 
     return render_template(
         'index.html',
@@ -84,18 +85,20 @@ def category(category_id):
 
 @app.route('/recipe/<recipe_id>')
 def recipe(recipe_id):
-    recipe = mongo.db.recipe.find_one({"_id":int(recipe_id)})
+    recipe = mongo.db.recipes.find_one({"_id":int(recipe_id)})
     
     return render_template(
         'recipe.html',
         title=recipe['Name'],
-        recipe=recipe)
+        recipe=recipe,
+        time=secs_to_hours(recipe['TotalTime'])
+    )
 
 @app.route('/recipe/random')
 def random_recipe():
-    Doc_total = mongo.db.recipe.count()
+    Doc_total = mongo.db.recipes.count()
     random = uniform(1, Doc_total)
-    recipe = mongo.db.recipe.find_one({"_id":int(random)})
+    recipe = mongo.db.recipes.find_one({"_id":int(random)})
     
     return render_template(
         'recipe.html',
@@ -107,7 +110,7 @@ def random_recipe():
 
 @app.route('/api/recipe/<recipe_id>/categories')
 def recipe_categories(recipe_id):
-    recipe = mongo.db.recipe.find_one({"_id":int(recipe_id)}, projection={"Categories": True})
+    recipe = mongo.db.recipes.find_one({"_id":int(recipe_id)}, projection={"Categories": True})
     
     return jsonify(recipe)
 
@@ -152,6 +155,7 @@ def login_page():
             logged_in = login_user(username, password)
             if logged_in:
                 session['current_user'] = username
+                return redirect(url_for('home'))
             return render_template(
                 'login.html',
                 title='Login/Signup',
@@ -174,10 +178,6 @@ def login_page():
             'login.html',
             title='Login/Signup'
         )
-
-def create_user():
-
-    return
 
 
 
@@ -224,11 +224,44 @@ def genSearch(name, value):
     return {name:{'$regex': value, "$options" :'i'}}
 
 def register_user(username, email, password):
-    return mongo.db.authors.insert_one({ "username": username, "email": email, "password": password })
+    hashpw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt(14))
+    return mongo.db.authors.insert_one({ "username": username, "email": email, "password": hashpw })
 def login_user(username, password):
     user = mongo.db.authors.find_one({"username": username})
     # this needs to be encrypted
-    if user['password'] == password: 
+    if bcrypt.checkpw(password.encode('utf-8'), user['password']): 
         return True
     return False
 
+# code used from: https://flask.palletsprojects.com/en/1.1.x/quickstart/#sessions as it's exactly as required for my functionality to log out
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('current_user', None)
+    return redirect(url_for('home'))
+    
+# end of code pasted
+
+@app.route('/addrecipe', methods=['GET', 'POST'])
+def add():
+    if request.method == 'POST':
+        data = request.form
+        
+        Name = data["Name"]
+        Description = data["Description"]
+        Steps = data["Steps"]
+        Ingredients = data["Ingredients"]
+        Categories = data["Categories"]
+        TotalTime = data["TotalTime"]
+        add_recipe(Name, Description, Steps, Ingredients,Categories,TotalTime)
+        
+    return render_template('addrecipe.html')
+
+def add_recipe(Name, Description, Steps, Ingredients,Categories,TotalTime):
+    
+    ingredientsList = Ingredients.split('\r\n')
+    categoriesList = Categories.split('\r\n')
+    stepsList = Steps.split('\r\n')
+    # list = [l for l in Steps.split('\r\n\r\n') if l.split()]
+    
+    return mongo.db.recipes.insert_one({'Name': Name, 'Description': Description, 'Steps': stepsList, 'Ingredients': ingredientsList, 'Categories': categoriesList, 'TotalTime': TotalTime})
