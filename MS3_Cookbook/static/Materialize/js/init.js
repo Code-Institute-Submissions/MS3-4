@@ -8,24 +8,30 @@
         duration: 100,
       });
       var desktopCarousel = instance[1];
-      var mobileCarousel = instance[0];
-
-
-      const FBRM = document.getElementById("btn-right-mob");
-      FBRM.addEventListener("click", function () {
-        mobileCarousel.next()
-      });
-      const FBLM = document.getElementById("btn-left-mob");
-      FBLM.addEventListener("click", function () {
-        mobileCarousel.prev()
-      });
 
       const FBR = document.getElementById("btn-right");
-      FBR.addEventListener("click", function () {
-        desktopCarousel.next()
-      });
+      if (FBR != null) {
+        FBR.addEventListener("click", function () {
+          desktopCarousel.next()
+        });
+      }
       const FBL = document.getElementById("btn-left");
-      FBL.addEventListener("click", function () {
-        desktopCarousel.prev()
-      });
+      if (FBL != null) {
+
+        FBL.addEventListener("click", function () {
+          desktopCarousel.prev()
+        });
+
+      }
+
+      var elem = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elem, {});
+
+      let tabsEl = document.getElementById("login-tabs");
+      var tabs = M.Tabs.init(tabsEl, {});
+
+
+      var el = document.getElementById('user-dropdown-trigger');
+      var instancess = M.Dropdown.init(el, {});
+
     });
