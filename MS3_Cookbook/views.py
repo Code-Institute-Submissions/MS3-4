@@ -8,7 +8,6 @@ from flask_mongoengine import MongoEngine
 from flask_pymongo import PyMongo
 from MS3_Cookbook import app
 from random import uniform
-from search import RecipeSearchForm
 from math import floor
 import bcrypt 
 
@@ -242,7 +241,7 @@ def logout():
     
 # end of code pasted
 
-@app.route('/addrecipe', methods=['GET', 'POST'])
+@app.route('/recipe/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         data = request.form
@@ -253,15 +252,32 @@ def add():
         Ingredients = data["Ingredients"]
         Categories = data["Categories"]
         TotalTime = data["TotalTime"]
-        add_recipe(Name, Description, Steps, Ingredients,Categories,TotalTime)
+        recipeImage = data["recipeImage"]
+        add_recipe(Name, Description, Steps, Ingredients,Categories,TotalTime, recipeImage)
         
     return render_template('addrecipe.html')
 
-def add_recipe(Name, Description, Steps, Ingredients,Categories,TotalTime):
-    
+def add_recipe(Name, Description, Steps, Ingredients, Categories, TotalTime, recipeImage):
+    recipe_id = mongo.db.recipes.count() + 1
     ingredientsList = Ingredients.split('\r\n')
     categoriesList = Categories.split('\r\n')
     stepsList = Steps.split('\r\n')
-    # list = [l for l in Steps.split('\r\n\r\n') if l.split()]
     
-    return mongo.db.recipes.insert_one({'Name': Name, 'Description': Description, 'Steps': stepsList, 'Ingredients': ingredientsList, 'Categories': categoriesList, 'TotalTime': TotalTime})
+    return mongo.db.recipes.insert_one({'_id': recipe_id, 'Name': Name, 'Description': Description, 'Steps': stepsList, 'Ingredients': ingredientsList, 'Categories': categoriesList, 'TotalTime': TotalTime, 'Image': recipeImage})
+
+@app.route('/recipe/<recipe_id>/delete', methods=['GET'])
+def delete(recipe_id):
+    recipe = mongo.db.recipes.find_one({"_id":int(recipe_id)})
+
+    for cat in recipe['Categories']:
+        recs = []
+        category = mongo.db.categories.find_one({'Name': cat})
+        for recipe in category['Recipes']:
+            if recipe['_id']  != int(recipe_id):
+                recs.append(recipe)
+        mongo.db.categories.find_one_and_update({"_id": int(category['_id'])}, {"$set": {"Recipes": recs}})   
+        if (len(recs) == 0):
+            mongo.db.categories.delete_one({'_id': int(category['_id'])})
+    mongo.db.recipes.delete_one({'_id': int(recipe_id)})
+    return redirect(url_for('home'))  
+
