@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form action="/addrecipe" method="post">
+<form action="/recipe/add" method="post">
     <div class="row">
         <div class="input-field col s8 offset-s2">
             
@@ -18,13 +18,13 @@
     </div>
     <div class="row">
         <div class="input-field col s8 offset-s2">
-            <textarea name="Ingredients" id="" cols="30" rows="10"></textarea>
+            <textarea required name="Ingredients" id="" cols="30" rows="10"></textarea>
             <label for="icon_add_Ingredients">Recipe Ingredients</label>
         </div>
     </div>
     <div class="row">
         <div class="input-field col s8 offset-s2">
-            <textarea name="Steps" id="" cols="30" rows="10"></textarea>
+            <textarea required name="Steps" id="" cols="30" rows="10"></textarea>
             <label for="icon_add_Steps">Recipe Steps</label>
         </div>
     </div>
@@ -36,7 +36,7 @@
     </div>
     <div class="row">
         <div class="input-field col s8 offset-s2">
-            <textarea name="Categories" id="" cols="30" rows="10"></textarea>
+            <textarea required name="Categories" id="" cols="30" rows="10"></textarea>
             <label for="icon_add_Categories">Recipe Categories</label>
         </div>
     </div>
