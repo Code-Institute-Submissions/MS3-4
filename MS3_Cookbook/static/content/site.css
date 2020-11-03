@@ -162,3 +162,27 @@ textarea {
     color: #fff;
     
 }
+
+#carousel-desktop .card-title, #carousel-desktop2 .card-title {
+    bottom: initial;
+    top: 0;
+    width: 100%;
+    text-align: center;
+}
+
+#carousel-desktop a, #carousel-desktop2 a {
+    color: white !important;
+}
+
+#nav-mobile {
+    z-index: 5000 !important;
+}
+
+.sidenav-overlay {
+    display: none !important;
+}
+
+@media screen and (min-width: 320px) {
+    #logo { height: 56px;
+    }
+}
