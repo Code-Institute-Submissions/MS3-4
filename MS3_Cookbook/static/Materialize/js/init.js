@@ -7,7 +7,7 @@
         indicators: true,
         duration: 100,
       });
-      var desktopCarousel = instance[1];
+      var desktopCarousel = instance[2];
 
       const FBR = document.getElementById("btn-right");
       if (FBR != null) {
@@ -31,7 +31,7 @@
       var tabs = M.Tabs.init(tabsEl, {});
 
 
-      var el = document.getElementById('user-dropdown-trigger');
+      var el = document.querySelectorAll('#user-dropdown-trigger');
       var instancess = M.Dropdown.init(el, {});
 
     });
