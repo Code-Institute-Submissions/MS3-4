@@ -33,20 +33,49 @@ def add_header(r):
 @app.route('/home')
 def home():
     """Renders the home page."""
+    num_categories =mongo.db.categories.count()
+    start = int(uniform(1,num_categories - 8))
+    category = mongo.db.categories.find()[start:start+8]
 
-    recipe1 = mongo.db.recipes.find_one({"_id":1})
-    recipe = mongo.db.recipes.find_one({"_id": 26})
+    categories = random_category_recipe(list(category))
+    categories2 = []
+    current_page = []
+    count = 0
+    for c in categories:
+        current_page.append(c)
+        count+=1
+        if count % 4 == 0:
+            categories2.append(current_page)
+            current_page = []
+
+    recipes = []
+    chosen_ids = []
+    recipe_ids = list(mongo.db.recipes.find({}, projection={'_id': True}))
+    count = 0
+    current_page = []
+    while count < 16:
+        
+        idx = floor(uniform(0,len(recipe_ids)))
+        try:
+            exists = chosen_ids.index(idx)
+        except:
+            recipe = mongo.db.recipes.find_one({"_id": recipe_ids[idx]['_id']})
+            chosen_ids.append(idx)
+            current_page.append(recipe)
+            count+=1
+            if count % 4 == 0:
+                recipes.append(current_page)
+                current_page = []
+        
+        
     
-    recipes1 = mongo.db.recipes.find()[1:5]
-    recipes2 = mongo.db.recipes.find()[11:15]
-    recipes3 = mongo.db.recipes.find()[21:25]
-
     return render_template(
         'index.html',
         title='Home Page',
         recipe=recipe,
-        recipes=[list(recipes1), list(recipes2), list(recipes3)],
+        recipes=recipes,
         year=datetime.now().year,
+        categories=categories2
     )
 
 @app.route('/contact')

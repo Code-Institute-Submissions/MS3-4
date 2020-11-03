@@ -11,6 +11,8 @@
     </div>
 </div>
 
+
+
 <!-- Single carousel for mobile view  -->
 <div class="row hide-on-med-and-up">
     <div class="col-s-12">
@@ -65,41 +67,81 @@
     </div>
 </div>
 
-
 <!-- Desktop Carousel -->
 <div class="row hide-on-med-and-down">
-    <div class="col-md-12">
-
-        <div class="carousel carousel-slider">
-            <a id="btn-left" class="btn-floating btn-large waves-effect waves-light red"><i
-                    class="material-icons">chevron_left</i></a>
+    <div class="col-s-12">
+        <h3>Featured Recipes</h3>
+        <div id="carousel-desktop" class="carousel carousel-slider">
+            <!-- <a id="btn-left" class="btn-floating btn-large waves-effect waves-light red"><i
+                    class="material-icons">chevron_left</i></a> -->
             {% for cat in recipes %}
             <!-- Above loop iterates through array of categories -->
             <div class="carousel-item">
                 <div class="row">
                     {% for rec in cat %}
                     <!-- Then iterates through each category to produce multiple cards filled with Recipe details -->
-                    <div class="col m3">
-                        <!-- Includes card template from recipecard.html -->
-                        {% include 'recipecard.html' %}
+                    <div class="col s3">
+
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="{{ rec.Image }}">
+                                <span class="card-title"><a
+                                        href="http://localhost:5000/recipe/{{ rec._id }}">{{ rec.Name }}</a></span>
+                            </div>
+                        </div>
+
 
                     </div>
                     {% endfor %}
                 </div>
             </div>
             {% endfor %}
-            <a id="btn-right" class="btn-floating btn-large waves-effect waves-light red"><i
-                    class="material-icons">chevron_right</i></a>
+            <!-- <a id="btn-right" class="btn-floating btn-large waves-effect waves-light red"><i
+                    class="material-icons">chevron_right</i></a> -->
         </div>
     </div>
 </div>
 
-
 <div class="row">
 
 
-    <div class="col-md-4">
+    <div class="col s12">
+        <h3>Featured Categories</h3>
+
+        <div id="carousel-desktop2" class="carousel carousel-slider">
+            <!-- <a id="btn-left" class="btn-floating btn-large waves-effect waves-light red"><i
+                    class="material-icons">chevron_left</i></a> -->
+            <!-- Above loop iterates through array of categories -->
+            {% for page in categories %}
+
+            <div class="carousel-item">
+
+                <div class="row">
+            {% for cat in page %}
+                    <!-- Then iterates through each category to produce multiple cards filled with Recipe details -->
+                    <div class="col s3">
+
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="{{ cat.Image }}">
+                                <span class="card-title"><a
+                                        href="http://localhost:5000/category/{{ cat._id }}">{{ cat.Name }}</a></span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            {% endfor %}
+
+            <!-- <a id="btn-right" class="btn-floating btn-large waves-effect waves-light red"><i
+                    class="material-icons">chevron_right</i></a> -->
+        </div>
         
+
     </div>
 </div>
 
