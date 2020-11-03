@@ -1,10 +1,11 @@
-# MS3 - "cookbook
+# MS3 - [Recipe for Disaster](http://louis-g-ms3.herokuapp.com/)
 
-One or two paragraphs providing an overview of your project.
-
-Essentially, this part is your sales pitch.
+Recipe for disaster is a Flask and  Mongo-DB web application that allows users to find and share their love of cooking! It has the capacity to grow indefinitely with food enthusiasts being able to add their own personal and favourite recipes to the site and stored within the Mongo-DB. 
+But Recipe for Disaster is not just for those that already appreciate home-cooked food, this application allows users to discover their passion with features such as finding a truly random recipe, and searching by single ingredients.
  
 ## UX
+ 
+This web application is for lovers of home-cooked food that wish to try new meals and want to share they're much-loved recipes with others online. With my application Users can come together as a community to share their passion and explore to find things for any occasion or purpose. Recipe for disaster is the best way to achieve these goals due to it's usablility, speed and design.
  
 	- As a user I want to be able to see recipes created by other users.
 
