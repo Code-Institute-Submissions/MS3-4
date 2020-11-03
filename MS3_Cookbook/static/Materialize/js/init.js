@@ -30,8 +30,10 @@
       let tabsEl = document.getElementById("login-tabs");
       var tabs = M.Tabs.init(tabsEl, {});
 
-
-      var el = document.querySelectorAll('#user-dropdown-trigger');
+      var el = document.getElementById('user-dropdown-trigger-desktop');
       var instancess = M.Dropdown.init(el, {});
+      var el2 = document.getElementById('user-dropdown-trigger-mobile');
+      var instancess2 = M.Dropdown.init(el2, {});
+
 
     });
