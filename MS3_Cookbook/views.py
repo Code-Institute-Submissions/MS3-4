@@ -181,11 +181,12 @@ def login_page():
 
 
 def secs_to_hours(time): 
-    hours = floor(time/3600) 
+    time = int(time)
+    hours = floor(int(time)/3600) 
     takeaway_hours = hours*60 
-    minutes = (time / 60) - takeaway_hours
+    minutes = (int(time) / 60) - takeaway_hours
     if hours< 1:
-        if time/60 > 1:
+        if int(time)/60 > 1:
             return str(int(time/60)) + " minutes"
         else:
             return str(int(time/60)) + " minute"
@@ -253,17 +254,33 @@ def add():
         Categories = data["Categories"]
         TotalTime = data["TotalTime"]
         recipeImage = data["recipeImage"]
-        add_recipe(Name, Description, Steps, Ingredients,Categories,TotalTime, recipeImage)
-        
-    return render_template('addrecipe.html')
+        new_id = add_recipe(Name, Description, Steps, Ingredients,Categories,TotalTime, recipeImage)
+        return redirect(f'/recipe/{new_id}')
+    return render_template('addrecipe.html', 
+        Name = "",
+        TotalTime = "",
+        recipeImage = ""
+    )
 
 def add_recipe(Name, Description, Steps, Ingredients, Categories, TotalTime, recipeImage):
-    recipe_id = mongo.db.recipes.count() + 1
+    recipe_id = mongo.db.recipes.count() + 2
     ingredientsList = Ingredients.split('\r\n')
     categoriesList = Categories.split('\r\n')
     stepsList = Steps.split('\r\n')
-    
-    return mongo.db.recipes.insert_one({'_id': recipe_id, 'Name': Name, 'Description': Description, 'Steps': stepsList, 'Ingredients': ingredientsList, 'Categories': categoriesList, 'TotalTime': TotalTime, 'Image': recipeImage})
+    category_id = mongo.db.categories.count() + 2
+
+    for category in categoriesList:
+        if (category != ''):
+            cat = mongo.db.categories.find_one({'Name': category})
+            if cat == None:
+                mongo.db.categories.insert_one({'_id': category_id, 'Name': category, 'Recipes': [{'_id': recipe_id, 'Name': Name, 'Description': Description, 'TotalTime': TotalTime, 'Image': recipeImage}]})
+            else:
+                recs = cat['Recipes']
+                recs.append({'_id': recipe_id, 'Name': Name, 'Description': Description, 'TotalTime': TotalTime, 'Image': recipeImage})
+                mongo.db.categories.find_one_and_update({'_id': cat['_id']}, {"$set":  {'Recipes': recs}})
+    mongo.db.recipes.insert_one({'_id': recipe_id, 'Name': Name, 'Description': Description, 'Steps': stepsList, 'Ingredients': ingredientsList, 'Categories': categoriesList, 'TotalTime': TotalTime, 'Image': recipeImage})
+    return recipe_id
+
 
 @app.route('/recipe/<recipe_id>/delete', methods=['GET'])
 def delete(recipe_id):
