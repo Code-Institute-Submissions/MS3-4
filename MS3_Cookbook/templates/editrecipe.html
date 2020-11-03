@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<form action="/recipe/{{recipe._id}}/edit" method="post">
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            
+            <input id="icon_add_username" type="text" class="validate" required name="Name" value="{{recipe.Name}}" minlength="4"> 
+            <label for="icon_add_Name">Recipe Name</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            <input id="icon_add_Description" type="text" class="validate" required name="Description" minlength="8" value="{{recipe.Description}}">
+            <label for="icon_add_Description">Recipe Description</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            <textarea required name="Ingredients" id="" cols="30" rows="10">{{ings}}</textarea>
+            <label for="icon_add_Ingredients">Recipe Ingredients</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            <textarea required name="Steps" id="" cols="30" rows="10">{{steps}}</textarea>
+            <label for="icon_add_Steps">Recipe Steps</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            <input id="icon_add_TotalTime" type="text" class="validate" required name="TotalTime" value="{{recipe.TotalTime}}">
+            <label for="icon_add_TotalTime">Total Time</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            <textarea required name="Categories" id="" cols="30" rows="10">{{cats}}</textarea>
+            <label for="icon_add_Categories">Recipe Categories</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s8 offset-s2">
+            <input id="icon_add_recipeImage" type="text" required name="recipeImage" value="{{recipe.Image}}">
+            <label for="icon_add_recipeImage">Recipe Image URL</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s6 offset-s3 center-align">
+            <input type="hidden" value="register" name="action">
+            <button class="btn waves-effect waves-light" type="submit">Save Recipe!
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
+
+
