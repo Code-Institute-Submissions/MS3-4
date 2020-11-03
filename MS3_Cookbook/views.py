@@ -298,3 +298,49 @@ def delete(recipe_id):
     mongo.db.recipes.delete_one({'_id': int(recipe_id)})
     return redirect(url_for('home'))  
 
+@app.route('/recipe/<recipe_id>/edit', methods=['GET', 'POST'])
+def editrecipe(recipe_id):
+    recipe = mongo.db.recipes.find_one({"_id":int(recipe_id)})
+    if request.method == 'POST':
+        data = request.form
+        Name = data["Name"]
+        Description = data["Description"]
+        Steps = data["Steps"]
+        Ingredients = data["Ingredients"]
+        Categories = data["Categories"]
+        TotalTime = data["TotalTime"]
+        recipeImage = data["recipeImage"]
+        new_id = edit_recipe(recipe['_id'], Name, Description, Steps, Ingredients,Categories,TotalTime, recipeImage)
+        return redirect(f'/recipe/{new_id}')
+
+
+    return render_template('editrecipe.html',
+        recipe=recipe,
+        ings = "\n".join(recipe['Ingredients']),
+        steps = "\n\n".join(recipe['Steps']),
+        cats = "\n".join(recipe['Categories'])
+    )
+
+def edit_recipe(recipe_id, Name, Description, Steps, Ingredients, Categories, TotalTime, recipeImage):
+    ingredientsList = Ingredients.split('\r\n')
+    categoriesList = Categories.split('\r\n')
+    stepsList = Steps.split('\r\n\r\n')
+    category_id = mongo.db.categories.count() + 2
+
+    for category in categoriesList:
+        if (category != ''):
+            cat = mongo.db.categories.find_one({'Name': category})
+            if cat == None:
+                mongo.db.categories.insert_one({'_id': category_id, 'Name': category, 'Recipes': [{'_id': recipe_id, 'Name': Name, 'Description': Description, 'TotalTime': TotalTime, 'Image': recipeImage}]})
+            else:
+                existsInCat = False
+                recs = cat['Recipes']
+                for rec in recs:
+                    if rec['_id'] == recipe_id:
+                        existsInCat = True
+                
+                if not existsInCat: 
+                    recs.append({'_id': recipe_id, 'Name': Name, 'Description': Description, 'TotalTime': TotalTime, 'Image': recipeImage})
+                    mongo.db.categories.find_one_and_update({'_id': cat['_id']}, {"$set":  {'Recipes': recs}})
+    mongo.db.recipes.find_one_and_update({'_id': recipe_id,}, {"$set": { 'Name': Name, 'Description': Description, 'Steps': stepsList, 'Ingredients': ingredientsList, 'Categories': categoriesList, 'TotalTime': TotalTime, 'Image': recipeImage}})
+    return recipe_id
